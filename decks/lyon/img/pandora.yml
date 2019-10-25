@@ -1,0 +1,11 @@
+contact: eng-observability@digitalocean.com
+criticality: SEV-2
+desc: "Managed internal metrics and alerting. Powered by Prometheus, Alertmanager and <3"
+github: "github.internal.digitalocean.com/observability/pandora"
+id: observability-platforms-pandora
+jira: 'OB'
+name: Pandora
+notes: "Operational Acceptance: https://confluence.internal.digitalocean.com/display/CO/Operational+Acceptance+Checklist+-+Pandora"
+pager_duty: P84VHE8
+slack: '#observability'
+team: "Observability Platforms"

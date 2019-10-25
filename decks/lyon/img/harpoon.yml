@@ -1,0 +1,22 @@
+
+
+contact: eng-harpoon@digitalocean.com
+criticality: SEV-1
+desc: Harpoon is a compute owned service responsible for queuing and processing events in the DigitalOcean cloud. This service replaces the use of alpha in event processing.
+dependencies: ['alpha', 'consul', 'docc', 'emu', 'hvd', 'rabbitmq']
+github: https://github.internal.digitalocean.com/digitalocean/cthulhu/blob/master/docode/src/do/teams/compute/harpoon/README.md
+id: 1
+jira: HPN
+name: harpoon
+notes: Harpoon services are critical for processing all the events in the cloud since they orchestrate the underlying microservices.
+pager_duty: PLJHJ9H
+product: droplet
+slack: '#harpoon'
+sli: sum(increase(harpoon_server_request_duration_seconds_count{code!="Internal", code!="Unavailable", docc_app="harpoon-server"}[2m])) / sum(increase(harpoon_server_request_duration_seconds_count{docc_app="harpoon-server"}[2m]))
+slo: .995
+team: Harpoon
+
+
+
+
+
