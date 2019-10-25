@@ -143,7 +143,7 @@
 						</ul>
 					</section>
 				</section>
-				<section data-background-image="img/bg3.png" data-background-opacity=0.5 data-transition="zoom-out">
+				<section data-background-image="img/bg3.png" data-background-opacity=0.5>
 					<h5><code>The Observatorium: <br>Motivations & Foundations...what? why?</code></h5>
 				</section>
 				<section data-background-image="img/bg3.png" data-background-opacity=0.5>
@@ -179,7 +179,7 @@
 						<strong>Foundations</strong> and Motivations
 					</section>
 					<section>
-						Foundations: <br>SLM | Service Catalog | Observability Platforms
+						<strong>Foundations</strong>: <br>SLM | Service Catalog | Observability Platforms
 					</section>
 				</section>
 
@@ -231,7 +231,9 @@
 						<h5>Problem Statements:</h5>
 						<ul style="font-size: 28px;">
 							<li class="fragment" style="margin: 20px;">Who owns the SLOs and SLIs for individual services?</li>
+								<div style="float: center; text-align: right" class="fragment">(The service owner teams)</div>
 							<li class="fragment" style="margin: 20px;">Where are these SLOs/SLIs defined?</li>
+								<div  style="float: center; text-align: right" class="fragment">(A catalog of services...)</div>
 						</ul>
 					</section>
 				</section>
@@ -252,7 +254,7 @@
 						</div>
 					</section>
 					<section>
-						<h5>Example SC Entry</h5>
+						<h5>Example <img src="img/ok_hand.png" style="vertical-align: bottom"> SC Entry</h5>
 						<pre class="fragment" style="font-size: 14px;"><code class="language-yaml">contact: TEAM_EMAIL@digitalocean.com
 criticality: SEV-1
 desc: Harpoon is a compute owned service responsible for queuing and processing events in the DigitalOcean cloud. This service replaces the use of alpha in event processing.
@@ -459,7 +461,8 @@ polyjuice_http_resp_time_ms_sum{resp_code="201"} 12</code></pre>
 						</ul>
 					</section>
 					<section>
-						<div>This is a product.</div>
+						<img src="img/list_of_wants.png" width=480px; style="border: 2px solid #000">
+						<div class="fragment">This is a product,<br>with multiple customer personas.</div>
 					</section>
 				</section>
 				<section data-background-image="img/bg3.png" data-background-opacity=0.3>
@@ -476,6 +479,9 @@ polyjuice_http_resp_time_ms_sum{resp_code="201"} 12</code></pre>
 					</section>
 					<section>
 						<img src="img/observatorium_arch_highlighted.svg">
+					</section>
+					<section>
+						<img src="img/observatorium_arch_highlighted_flow.svg">
 					</section>
 				</section>
 				<section data-background-image="img/bg3.png" data-background-opacity=0.3>
@@ -531,12 +537,13 @@ polyjuice_http_resp_time_ms_sum{resp_code="201"} 12</code></pre>
 <p class="fragment">4) Matrices of Service performance vectors are pulled from EDW and compared/clustered</p>
 <p class="fragment">5) Nearest Neighbor (or other clustering algo) provides best incident match to current incident patterns</p>
 <p class="fragment">6) Suggestions surfaced to end user, including metadata</p>
+<p class="fragment">7) After Incident concludes, post-mortem metadata written back to DB</p>
 <img class="fragment" src="img/mttr_down.svg" style="height: 80px;"></code></div>
 					</section>
 					<section>
 						<div style="float: left; width: 600px;"><img src="img/degradation_prognostication.svg" style="height: 480px;"></div>
 						<div style="float: right; width: 350px;"><code style="font-size: 16px;"><p class="fragment">1) House money: Historical performance/reliability metrics already exist/are warehoused for services and their dependencies</p>
-<p class="fragment">2) Vector Autoregressive models batched/refreshed regularly</p>
+<p class="fragment">2) Vector AutoRegressive models batched/refreshed regularly</p>
 <p class="fragment">3) Forecasts predicting degradation with enough significance enter the <strong>Alerting protocol</strong></p>
 <p class="fragment">4) Warnings/Messaging arrive to the owner teams before service drops too low</p>
 <img class="fragment" src="img/incidents_down.svg" style="height: 120px;"></code></div>
@@ -550,9 +557,10 @@ polyjuice_http_resp_time_ms_sum{resp_code="201"} 12</code></pre>
 						<code>Adoption</code>
 						<ul style="font-size: 24px;">
 							<li class="fragment" style="margin: 20px;"><code>Service Catalog becomes the official DO service gatekeeper:<br>"If you don't comply, you don't deploy"™</code></li>
-							<li class="fragment" style="margin: 20px;"><code>Source metric format expands to include non-Pandora data</code></li>
-							<li class="fragment" style="margin: 20px;"><code>Active efforts to broaden usage among diverse internal customer base</code></li>			
-							<li class="fragment" style="margin: 20px;"><code>New product SLAs to be predicated on official SLM data</code></li>			
+							<li class="fragment" style="margin: 20px;"><code>Active efforts to broaden usage among diverse internal customer base</code></li>
+							<li class="fragment" style="margin: 20px;"><code>New product SLAs to be predicated on official SLM data</code></li>
+							<li class="fragment" style="margin: 20px;"><code>Telemetry to reveal who uses the product and how often</code></li>
+							<li class="fragment" style="margin: 20px;"><code>Reliability measured in staging/pre-prod environments before deploying to production</code></li>
 						</ul>
 					</section>
 					<section>
@@ -560,7 +568,7 @@ polyjuice_http_resp_time_ms_sum{resp_code="201"} 12</code></pre>
 						<ul style="font-size: 24px;">
 							<li class="fragment" style="margin: 20px;"><code>All services have SLOs and SLIs no matter their proximity to customers</code></li>
 							<li class="fragment" style="margin: 20px;"><code>Error budgets available ad hoc for any historical time period</code></li>
-							<li class="fragment" style="margin: 20px;"><code>Source metric format expands to include non-Pandora data</code></li>
+							<li class="fragment" style="margin: 20px;"><code>Source metric format expands to include non-Pandora data:<br>Kafka streams | Structured SQL DBs</code></li>
 							<li class="fragment" style="margin: 20px;"><code>Integration with production/staging deployment tracking</code></li>							
 						</ul>
 					</section>
@@ -568,8 +576,9 @@ polyjuice_http_resp_time_ms_sum{resp_code="201"} 12</code></pre>
 						<code>Impact</code>
 						<ul style="font-size: 24px;">
 							<li class="fragment" style="margin: 20px;"><code>Significant reduction of MTTR</code></li>
-							<li class="fragment" style="margin: 20px;"><code>Teams iterate on their SLOs and work to reduce outage counts</code></li>
 							<li class="fragment" style="margin: 20px;"><code>Fewer customer tickets/complaints about reliability</code></li>
+							<li class="fragment" style="margin: 20px;"><code>Teams iterate on their SLOs and work to reduce outage counts/overall time running degraded services</code></li>
+							<li class="fragment" style="margin: 20px;"><code>More mature pattern recognition among microservices leads to better cross-team developmental collaboration and more cohesive architecture</code></li>
 						</ul>
 					</section>
 				</section>
@@ -593,7 +602,7 @@ polyjuice_http_resp_time_ms_sum{resp_code="201"} 12</code></pre>
 					</section>
 				</section>
 				<section data-background-image="img/bg7.png" data-background-opacity=0.5>
-					<h2>Merci!</h2>
+					<h2>Thank you!</h2>
 				</section>
 			</div>
 		</div>
