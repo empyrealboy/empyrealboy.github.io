@@ -412,9 +412,10 @@ rules:
     buckets: [ 1, 4, 16, 64, 256, 1024, 4096, 16384, 32768 ]</code></pre>
 					</section>
 					<section>
-						<div align="center" class="fragment" style="font-size: 16px; text-align: left;"><code><190>2019-01-29T19:53:16.450156+00:00 flux-kubernetes03.nyc3.internal.digitalocean.com polyjuice_flux[1]: @cee: {"response":{"code":201,"time_ms":12}}</code></div>
+						<div align="center" class="fragment" style="font-size: 16px; text-align: left;">
+							<pre class="fragment" style="font-size: 16px;"><code><190>2019-01-29T19:53:16.450156+00:00 flux-kubernetes03.nyc3.internal.digitalocean.com polyjuice_flux[1]: @cee: {"response":{"code":201,"time_ms":12}}</code></pre></div>
 						<div align="center" class="fragment">...</div>
-						<pre class="fragment" style="font-size: 16px;"><code class="language-go"># HELP polyjuice_http_resp_time_ms Polyjuice HTTP response time (ms)<br>
+						<pre class="fragment" style="font-size: 16px;"><code># HELP polyjuice_http_resp_time_ms Polyjuice HTTP response time (ms)<br>
 # TYPE polyjuice_http_resp_time_ms histogram
 polyjuice_http_resp_time_ms_bucket{resp_code="201",le="1"} 1
 polyjuice_http_resp_time_ms_bucket{resp_code="201",le="4"} 1
@@ -535,7 +536,7 @@ labels {key: "replica" value: "general-2d3a637.fra1"} labels {key: "__name__" va
 					</h5>
 					<section>
 	      				<img src="img/single_event_a_4.svg">
-						<pre class="fragment" style="font-size: 14px;"><code class="language-sql">select * from hive.observatorium.metrics_data where metric_name = 'sli%3Aalpha_write_latency%3Ap99' limit 1\G
+						<pre class="fragment" style="font-size: 14px;"><code class="language-sql">select * from hive.observatorium.metrics_data where metric_name = 'sli:alpha_write_latency:p99' limit 1\G
 
 -[ RECORD 1 ]----------------------------------------------------------------------------------------
 time        | 2019-10-27 13:22:01.379
