@@ -483,6 +483,74 @@ polyjuice_http_resp_time_ms_sum{resp_code="201"} 12</code></pre>
 					<section>
 						<img src="img/observatorium_arch_highlighted_flow.svg">
 					</section>
+					<section>
+						<h5>The Path of a single event</h5>
+					</section>
+				</section>
+				<section data-background-image="img/bg3.png" data-background-opacity=0.3>
+					<h5>
+						<code>Putting the pieces together<br>
+						The Path of a single event<br>
+					</code>
+					</h5>
+					<section>
+						1) Pandora/Prometheus:
+						<pre class="fragment" style="font-size: 14px;"><code class="language-yaml">recording_rules:
+  - record: sli:alpha_write_latency:p99
+    expr: |-
+      histogram_quantile(0.99,sum(rate(mysql_info_schema_write_query_response_time_seconds_bucket{cluster="alpha"}[5m]))
+      by (le))
+    labels:
+      observatorium: sli</code></pre>
+      				<pre class="fragment" style="font-size: 14px;"><code class="language-yaml">{"status":"success","data":{"resultType":"vector","result":[{"metric":{"__name__":"sli:alpha_write_latency:p99","observatorium":"sli"},"value":[1572182521.252,"0.029987078651684942"]}]}}</code></pre>
+      				<img class="fragment" src="img/write_latency_pandora.png">
+      				<img src="img/single_event_a_1.svg">
+					</section>
+					<section>
+						2) OBS Ingestion/Digestion:
+						<pre class="fragment" style="font-size: 18px;"><code class="language-yaml">labels {key: "observatorium" value: "sli"}
+labels {key: "replica" value: "general-2d3a637.fra1"} labels {key: "__name__" value: "sli:alpha_write_latency:p99"} samples {key: 1572182521.252 value: 0.029987078651684942}</code></pre>
+      				<img src="img/single_event_a_2.svg">
+					</section>
+					<section>
+						3a) HDFS Data Lake:
+						<pre class="fragment" style="font-size: 14px; width: 1024px;"><code class="language-yaml">Row(
+	metric_name='sli:alpha_write_latency:p99', 
+	time=datetime.datetime(2019, 10, 27, 13, 22, 1, 379000), 
+	value=0.029987078651684942, 
+	labels={'replica': 'general-49ae403.nyc3', '__name__': 'sli:alpha_write_latency:p99', 'observatorium': 'sli'}, 
+	meta={}
+)</code></pre>
+      				<img src="img/single_event_a_3.svg">
+					</section>
+					<section>
+						4a) The Trim Reaper:
+						<pre class="fragment" style="font-size: 14px;"><code class="language-sql">select * from hive.observatorium.metrics_data where metric_name = 'sli%3Aalpha_write_latency%3Ap99' limit 1\G
+
+-[ RECORD 1 ]----------------------------------------------------------------------------------------
+time        | 2019-10-27 13:22:01.379
+value       | 0.029987078651684942
+labels      | {replica=general-2d3a637.fra1, __name__=sli:alpha_write_latency:p99, observatorium=sli}
+meta        | {}
+metric_name | sli:alpha_write_latency:p99
+year        | 2019
+month       | 10
+day         | 27
+hour        | 13</code></pre>
+      				<img src="img/single_event_a_4.svg">
+					</section>
+					<section>
+						3b) OBS service-event-source:
+						<pre class="fragment" style="font-size: 12px; width: 950px;"><code class="language-sql">|name                       |start              |end                |aggregator|aggregatorLabel|objective|value     |observations|
++---------------------------+-------------------+-------------------+----------+---------------+---------+----------+------------+
+|sli:alpha_write_latency:p99|2019-10-27 09:45:00|2019-10-27 09:55:00|null      |null           |0.2      |0.02772143|20          |</code></pre>
+      				<img src="img/single_event_b_3.svg">
+					</section>
+					<section>
+						4b) OBS UI:
+						<img class="fragment" src="img/obs_ui_cropped.png" style="height: 160px; width:1024px;">
+      					<img src="img/single_event_b_4.svg">
+					</section>
 				</section>
 				<section data-background-image="img/bg3.png" data-background-opacity=0.3>
 					<h5>
